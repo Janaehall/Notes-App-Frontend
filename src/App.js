@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import LogIn from './components/LogIn'
 import Header from './components/Header'
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import Notes from './components/Notes'
 import Messages from './components/Messages'
@@ -12,18 +12,34 @@ import NewNoteForm from './components/NewNoteForm'
 
 
 class App extends Component{
+
+  state = {
+    filter: null
+  }
+
+  handleChange = e => {
+    this.setState({
+      filter: e.target.value
+    })
+  }
+
   render(){
     return (
       <div>
       <Header />
-      <Switch>
         <Route exact path='/login' component={LogIn}/>
-        <Route exact path='/sign_up' component={SignUp}/>
-        <Route path='/notes' render={(props) => <Notes {...props}/>}/>
-        <Route exact path={`/new`} component={NewNoteForm}/>
-        <Route path={`/notes_from_friends`} render={(props) => <Messages {...props}/>}/>
-
-      </Switch>
+        {this.props.currentUser?
+           <Switch>
+            <Route exact path='/sign_up' component={SignUp}/>
+            <Route path='/notes' render={(props) => <Notes {...props} 
+              handleChange={this.handleChange} filter={this.state.filter}/>}/>
+            <Route exact path={`/new`} component={NewNoteForm}/>
+            <Route path={`/notes_from_friends`} render={(props) => <Messages {...props} 
+              handleChange={this.handleChange} filter={this.state.filter}/>}/>
+           </Switch>
+            :
+          <Redirect to='/login'/>
+        }
       </div>
     );
   }

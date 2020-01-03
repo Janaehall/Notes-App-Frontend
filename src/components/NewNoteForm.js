@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
 import {Form, Button} from 'react-bootstrap'
 
 class NewNoteForm extends Component {
@@ -58,8 +57,6 @@ class NewNoteForm extends Component {
 
   render() {
     return(
-      <div>
-        {this.props.currentUser?
           <Form id="newForm" onSubmit={this.handleSubmit}>
             <Form.Group controlId="formGroupTitle">
               <Form.Label>Title</Form.Label>
@@ -77,11 +74,7 @@ class NewNoteForm extends Component {
                 placeholder="Add tags separated by commas" />
             </Form.Group>
             <Button variant="primary" type="submit">Add Note</Button>
-          </Form>
-        :
-        <Redirect to="/login"/>
-        }
-      </div>)
+          </Form>)
   }
 }
 

@@ -28,9 +28,9 @@ class Notes extends Component{
   }
 
   filterNotes = () => {
-    if (this.state.filter){
+    if (this.props.filter){
       return this.props.notes.filter(note => {
-        return note.tags.some(tag => tag.name.toLowerCase().includes(this.state.filter.toLowerCase()))
+        return note.tags.some(tag => tag.name.toLowerCase().includes(this.props.filter.toLowerCase()))
       })
     } else {
       return this.props.notes
@@ -39,20 +39,18 @@ class Notes extends Component{
 
   renderNotes = () => {
     let notes = this.filterNotes()
-    return this.props.notes.length > 0 ?
-    <div id="notesList">
-      <FilterForm handleChange={this.handleChange}/>
-      {notes.map(note => {
-        return <Note note={note} key={note.id} handleClick={this.handleClick}/>
-    })}
-    </div>
-    :
-    <NoNotes type={'notes'} />
+    return(
+      <div id="notesList">
+        {notes.map(note => {
+          return <Note note={note} key={note.id} handleClick={this.handleClick}/>
+        })}
+      </div>
+    )
   }
 
 
 
-  renderDashboard = () => {
+  setRoutes = () => {
     let {match} = this.props
     return (
       <div>
@@ -75,12 +73,16 @@ class Notes extends Component{
 
   render() {
     return (
-    <div>
-      {this.props.currentUser?
-      this.renderDashboard()
-      :
-      <Redirect to="/login"/>}
-    </div>
+     <div>
+        {this.props.notes.length > 0 ?
+          <div>
+            <FilterForm handleChange={this.props.handleChange}/>
+            {this.setRoutes()}
+          </div>
+        :
+        <NoNotes type={'notes'} />
+        }
+     </div>
   )
   }
 }

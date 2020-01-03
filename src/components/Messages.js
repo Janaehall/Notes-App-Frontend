@@ -3,24 +3,12 @@ import {connect} from 'react-redux'
 import Message from './Message'
 import UnseenMessage from './UnseenMessage'
 import MessageDisplay from './MessageDisplay'
-import { Switch, Route, Redirect} from 'react-router-dom'
+import {Switch, Route, Redirect} from 'react-router-dom'
 import NoNotes from './NoNotes'
 import FilterForm from './FilterForm'
 
 
 class Messages extends Component{
-
-  state = {
-    filter: null
-  }
-
-  handleChange = e => {
-    this.setState({
-      filter: e.target.value
-    })
-  }
-
-
 
   handleClick = (message) => {
     this.props.toggleMessageDisplay(message)
@@ -29,42 +17,35 @@ class Messages extends Component{
 
 
   filterMessages = () => {
-   if (this.state.filter){
-     return this.props.messages.filter(message => {
-       return message.note.tags.some(tag => tag.name.includes(this.state.filter))
-     })
-   } else {
-     return this.props.messages
-   }
- }
-
-
+    if (this.props.filter){
+      return this.props.messages.filter(message => {
+        return message.note.tags.some(tag => tag.name.toLowerCase().includes(this.props.filter.toLowerCase()))
+      })
+    } else {
+      return this.props.messages
+    }
+  }
 
   renderMessages = () => {
-    return this.props.messages.length > 0 ?
+    return (
     <div id="notesList">
-      <FilterForm handleChange={this.handleChange}/>
       {this.filterMessages().map(message => {
         return message.seen? 
         <Message message={message} key={message.id} handleClick={this.handleClick}/> 
         :
         <UnseenMessage message={message} key={message.id} handleClick={this.handleClick}/>
     })}
-    </div>
-    :
-    <NoNotes type={'messages'} />
-
+    </div>)
   }
 
 
 
-  renderDashboard = () => {
+  setRoutes = () => {
     let {match} = this.props
     return (
       <div>
         {this.renderMessages()}
-        {this.props.message
-          ?
+        {this.props.message?
           <Switch>
             <Route exact path={`${match.path}/:id`} component={MessageDisplay}/>
           </Switch>
@@ -80,10 +61,14 @@ class Messages extends Component{
   render() {
     return (
     <div>
-      {this.props.currentUser?
-      this.renderDashboard()
-      :
-      <Redirect to="/login"/>}
+      {this.props.messages.length > 0 ?
+        <div>
+          <FilterForm handleChange={this.props.handleChange}/>
+          {this.setRoutes()}
+        </div>
+        :
+        <NoNotes type={'messages'} />
+      }
     </div>
   )
 }
@@ -94,7 +79,6 @@ class Messages extends Component{
 const mapStateToProps = state => {
   return {
     message: state.message,
-    currentUser: state.currentUser,
     messages: state.messages
   };
 };

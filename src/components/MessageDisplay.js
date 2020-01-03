@@ -47,7 +47,7 @@ class messageDisplay extends Component {
           </p>
         </Modal.Body>
           <Modal.Footer>
-            <p className='mr-auto'>A lovely message from {this.props.message.sender.name}!</p>
+            <p className='mr-auto'>A lovely note from {this.props.message.sender.name}</p>
             <NavLink id="delLink" to='/notes_from_friends' onClick={this.deleteMessage}>Delete</NavLink>
           </Modal.Footer>
       </Modal>
