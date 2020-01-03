@@ -6,9 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import * as serviceWorker from './serviceWorker';
 import {combineReducers, createStore } from 'redux'
 import { Provider } from 'react-redux'
-// import usersReducer from './reducers/MessagesReducer'
 import notesReducer from './reducers/NotesReducer'
-// import filterReducer from './reducers/FilterReducer'
 import messagesReducer from './reducers/MessagesReducer'
 import currentUserReducer from './reducers/CurrentUserReducer';
 import noteDisplayReducer from './reducers/NoteDisplayReducer'
@@ -16,7 +14,6 @@ import messageDisplayReducer from './reducers/MessageDisplayReducer'
 
 
 const reducers = combineReducers({
-  // users: usersReducer,
   notes: notesReducer,
   currentUser: currentUserReducer,
   note: noteDisplayReducer,

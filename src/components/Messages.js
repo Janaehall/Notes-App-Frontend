@@ -5,50 +5,61 @@ import UnseenMessage from './UnseenMessage'
 import MessageDisplay from './MessageDisplay'
 import { Switch, Route, Redirect} from 'react-router-dom'
 import NoNotes from './NoNotes'
+import FilterForm from './FilterForm'
 
 
 class Messages extends Component{
 
-  handleClick = (message) => {
-    console.log('THIS IS THE MESSAGE:', message)
-    this.props.toggleMessageDisplay(message)
-    this.props.history.push(`/messages/${message.id}`)
+  state = {
+    filter: null
   }
 
-  handleNewClick = (message) => {
-    this.handleClick(message)
-    this.props.seenMessage(message)
-    let reqObj = {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        seen: true
-      })
-    }
-    fetch(`http://localhost:3000/messages/${message.id}`, reqObj)
+  handleChange = e => {
+    this.setState({
+      filter: e.target.value
+    })
   }
+
+
+
+  handleClick = (message) => {
+    this.props.toggleMessageDisplay(message)
+    this.props.history.push(`/notes_from_friends/${message.id}`)
+  }
+
+
+  filterMessages = () => {
+   if (this.state.filter){
+     return this.props.messages.filter(message => {
+       return message.note.tags.some(tag => tag.name.includes(this.state.filter))
+     })
+   } else {
+     return this.props.messages
+   }
+ }
+
+
 
   renderMessages = () => {
-    let messages = this.props.messages
-    return messages.length > 0 ?
+    return this.props.messages.length > 0 ?
     <div id="notesList">
-      {messages.map(message => {
+      <FilterForm handleChange={this.handleChange}/>
+      {this.filterMessages().map(message => {
         return message.seen? 
         <Message message={message} key={message.id} handleClick={this.handleClick}/> 
         :
-        <UnseenMessage message={message} key={message.id} handleClick={this.handleNewClick}/>
+        <UnseenMessage message={message} key={message.id} handleClick={this.handleClick}/>
     })}
     </div>
     :
-    <NoNotes type={this.props.type} />
+    <NoNotes type={'messages'} />
 
   }
 
+
+
   renderDashboard = () => {
     let {match} = this.props
-    console.log(this.props.message)
     return (
       <div>
         {this.renderMessages()}
@@ -58,11 +69,13 @@ class Messages extends Component{
             <Route exact path={`${match.path}/:id`} component={MessageDisplay}/>
           </Switch>
           :
-          <Redirect to='/messages'/>
+          <Redirect to='/notes_from_friends'/>
         }
       </div>
     )
   }
+
+
 
   render() {
     return (
@@ -76,6 +89,8 @@ class Messages extends Component{
 }
 }
 
+
+
 const mapStateToProps = state => {
   return {
     message: state.message,
@@ -84,11 +99,14 @@ const mapStateToProps = state => {
   };
 };
 
+
+
 const mapDispatchToProps = dispatch => {
   return {
     toggleMessageDisplay: message => dispatch({type: "TOGGLE_MESSAGE_DISPLAY", message: message}),
     seenMessage: message => dispatch({type: "SEEN_MESSAGE", message: message})
   }
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Messages);

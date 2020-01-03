@@ -1,18 +1,17 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Card} from 'react-bootstrap'
 
-export default class UnseedMessage extends Component {
-
-  render() {
+const UnseenMessage = (props) => {
     return(
-       <Card id="noteCard" onClick={() => this.props.handleClick(this.props.message)} bg="success" text="white" style={{ width: '18rem' }}>
+       <Card id="noteCard" onClick={() => props.handleClick(props.message)} bg="success" text="white" style={{ width: '18rem' }}>
        <Card.Body id="cardBody">
          <Card.Text>
-           <p>New note from {this.props.message.sender.name}!</p>
+           <p>New note from {props.message.sender.name}!</p>
          </Card.Text>
        </Card.Body>
      </Card>
 
     )
-  }
 }
+
+export default UnseenMessage

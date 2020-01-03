@@ -3,7 +3,7 @@ export default function messagesReducer(state = [], action) {
     case 'SET_MESSAGES':
       return action.messages
     case 'DELETE_MESSAGE':
-      return state.filter(message => message !== action.message)
+      return state.filter(message => message.id !== action.message.id)
     case 'SEEN_MESSAGE':
       return state.map(message => {
         return message === action.message? {...message, seen: true} : message

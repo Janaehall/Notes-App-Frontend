@@ -4,6 +4,7 @@ import {Redirect} from 'react-router-dom'
 import {Form, Button} from 'react-bootstrap'
 
 class NewNoteForm extends Component {
+
   state = {
     note: {
       title: '',
@@ -12,11 +13,15 @@ class NewNoteForm extends Component {
     }
   }
 
+
+
   handleChange = (e) => {
     this.setState({
       note: {...this.state.note, [e.target.name]: e.target.value}
     })
   }
+
+
 
   handleSubmit = (e) => {
     e.preventDefault()
@@ -36,7 +41,8 @@ class NewNoteForm extends Component {
     }
     this.postNote(reqObj)
   }
-  
+
+
 
   postNote = reqObj => {
     fetch(`http://localhost:3000/notes`, reqObj)
@@ -47,6 +53,8 @@ class NewNoteForm extends Component {
       this.props.toggleNoteDisplay(note)
       })
   }
+
+
 
   render() {
     return(
@@ -77,11 +85,15 @@ class NewNoteForm extends Component {
   }
 }
 
+
+
 const mapStateToProps = state => {
   return {
     currentUser: state.currentUser
   };
 };
+
+
  
 const mapDispatchToProps = dispatch => {
   return {
@@ -90,7 +102,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
  
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewNoteForm);
+export default connect(mapStateToProps,mapDispatchToProps)(NewNoteForm);

@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Form, Modal, Button} from 'react-bootstrap'
 
 class SendModal extends Component {
+
   state = {
     username: '',
     noUser: false
@@ -24,20 +25,24 @@ class SendModal extends Component {
     this.postMessage(reqObj)
   }
 
+
+
   postMessage = reqObj => {
     fetch(`http://localhost:3000/messages`, reqObj)
-    .then(resp => {
-      console.log(resp.status)
-     if(resp.status >= 200 && resp.status < 300){
-      this.props.history.push(`/notes/${this.props.note.id}`)
-     } else {
+    .then(resp => resp.json())
+    .then(message => {
+      if(message.error){
         this.setState({
           noUser: true
-        })
-
-     }
+        })     
+      } else {
+        this.props.history.push(`/notes`)
+        alert('Message sent!')
+      }
     })
   }
+
+
 
   handleChange = e => {
     this.setState({
@@ -45,14 +50,17 @@ class SendModal extends Component {
     })
   }
 
+  onHide = () => {
+    this.props.history.push('/notes')
+  }
+
+
+
   render() {
     return(
-      <Modal
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      show={true}>
-        <Form onSubmit={this.onSubmit} id="sendForm">
+      <Modal onHide={this.onHide} size="lg" aria-labelledby="contained-modal-title-vcenter" 
+      centered show={true}>
+        <Form style={{'padding':'50px'}} onSubmit={this.onSubmit} id="sendForm">
         <p style={{'color': 'red'}}>{this.state.noUser? "User not found!" : null}</p>
           <Form.Group controlId="formBasicUsername">
             <Form.Label>Enter a user to send this note to!</Form.Label>
@@ -72,5 +80,6 @@ const mapStateToProps = state => {
     note: state.note,
   }
 }
+
  
 export default connect(mapStateToProps)(SendModal);

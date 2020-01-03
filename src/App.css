@@ -7,71 +7,11 @@
   pointer-events: none;
 }
 
-/* #header {
-  height:50px;
-  width: 100%;
-  background-color:lightskyblue;
-} */
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-/* #noteDisplay {
-  display: inline-block;
-  width: 50%;
-  height:500px;
-  border: solid black 1px;
-  padding: 5px;
-  margin: 15px;
-  float:right;
-  margin-right:20%;
-
-
-}
-
-#editNote {
-  display:inline-block;
-  width:50%;
-  height:500px;
-  border: solid black 1px;
-  padding: 5px;
-  margin: 10px;
-
-
-
-}
-
-#notesList {
-  display:inline-block;
-  width: 25%;
-  border: solid black 1px;
-  height:500px;
-  margin: 10px;
-  padding:0px;
-  overflow:scroll;
-  float:left;
-
-
-}
-
-#note {
-  border: solid black 1px;
-  margin: 0px;
-  width:100%;
-}
-
-#signOut {
-  display:inline-block
-}
-
-#content {
-  width:100px;
-  height:100px;
-}
-*/
 
 #navHeader {
   display: inline-block;
@@ -131,7 +71,11 @@
 }
 
 Button {
-  margin:0px auto;
+  margin:0px 10px;
+}
+
+Button:hover {
+  box-shadow:2px 5px 5px rgba(0,0,0,0.2);
 }
 
 textarea {
@@ -151,34 +95,13 @@ textarea {
 }
 
 #cardHeader {
-  /* background-color:#925E4F; */
-  /* height: 30px; */
-  /* border: 1px solid rgb(124, 85, 74); */
-  /* padding:5px; */
   text-align:center;
-
-}
-
-#cardBody {
-  /* background-color: #B49187; */
-  /* color: black; */
-  /* padding:15px; */
-}
-
-body {
-  /* background-color: #99C5D2; */
 }
 
 ::-webkit-scrollbar {
   width: 0px;  /* Remove scrollbar space */
   background: transparent;  /* Optional: just make scrollbar invisible */
 }
-
-/* .card {
-  height: 200px;
-  width: 50px;
-  overflow:auto;
-} */
 
 #closeBtn {
   margin:0px;
@@ -213,7 +136,6 @@ body {
 }
 
 #headerLink{
-  /* background-color: rgb(42, 160, 47); */
   padding: 7px 10px 7px 10px;
   border-radius: 10%;
   color:rgb(5, 39, 23);
@@ -221,7 +143,6 @@ body {
 }
 
 #headerLink:hover {
-  /* background-color:  rgb(29, 119, 34); */
   text-decoration: none;
   
 }
@@ -231,12 +152,10 @@ body {
   padding: 7px 10px 7px 10px;
   border-radius: 10%;
   color:white;
-  /* border: 1px solid black; */
 
 }
 
 #delLink:hover {
-  /* background-color:  rgb(189, 4, 4); */
   text-decoration: none;
   box-shadow:2px 5px 5px rgba(0,0,0,0.2);
 
@@ -244,21 +163,17 @@ body {
 }
 
 #editLink {
-  /* border: 1px solid black; */
   padding: 7px 10px 7px 10px;
   border-radius: 10%;
   color:rgb(0, 0, 0);
 }
 
 #editLink:hover {
-  /* background-color:  rgb(77, 78, 97); */
   box-shadow:2px 5px 5px rgba(0,0,0,0.2);
   text-decoration: none;
   
 }
 
-/* #modal {
-  width:100%;
-  height:100%;
-  background-color:rgba(0,0,0,0.5)
-} */
+#filterForm {
+  margin:10px;
+}

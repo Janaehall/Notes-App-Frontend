@@ -13,9 +13,12 @@ class NoteDisplay extends Component {
     .then(alert("Note has been deleted! 👍🏾"))
   }
 
+
+
   onHide = () => {
     this.props.toggleNoteDisplay(null)
   }
+
 
   render() {
     let {note} = this.props
@@ -45,11 +48,15 @@ class NoteDisplay extends Component {
   }
 }
 
+
+
 const mapStateToProps = state => {
   return {
     note: state.note
   };
 };
+
+
  
 const mapDispatchToProps = dispatch => {
   return {
@@ -57,8 +64,7 @@ const mapDispatchToProps = dispatch => {
     toggleNoteDisplay: note => dispatch({type: 'TOGGLE_NOTE_DISPLAY', note: note}),
   };
 };
+
+
  
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NoteDisplay);
+export default connect(mapStateToProps, mapDispatchToProps)(NoteDisplay);

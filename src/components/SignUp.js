@@ -3,9 +3,10 @@ import {connect} from 'react-redux'
 import {Form, Button} from 'react-bootstrap'
 
 class LogIn extends Component {
+
   state = {
     username: '',
-
+    existingUser: false
   }
 
   onSubmit = e => {
@@ -19,15 +20,28 @@ class LogIn extends Component {
         name: this.state.username
       })
     }
+    this.createUser(reqObj)
+  }
+
+
+  createUser = reqObj => {
     fetch(`http://localhost:3000/users`, reqObj)
     .then(resp => resp.json())
     .then(user => {
-      this.props.setUser(user)
-      this.props.setNotes(user.notes)
-      this.props.setMessages(user.received_messages)
-      this.props.history.push(`/notes`)
+      if(!user.error){
+        this.props.setUser(user)
+        this.props.setNotes(user.notes)
+        this.props.setMessages(user.received_messages)
+        this.props.history.push(`/notes`)
+      } else {
+        this.setState({
+          existingUser: true
+        })
+      }
     })
   }
+
+
 
   handleChange = e => {
     this.setState({
@@ -35,9 +49,11 @@ class LogIn extends Component {
     })
   }
 
+
   render() {
     return(
       <Form onSubmit={this.onSubmit} id="logInForm">
+        <p style={{'color':'red'}}>{this.state.existingUser? "Username is taken": null}</p>
         <Form.Group controlId="formBasicUsername">
           <Form.Label>Please Select A Username</Form.Label>
           <Form.Control onChange={this.handleChange} type="text" name="username" placeholder="Username" />
@@ -48,6 +64,8 @@ class LogIn extends Component {
     )
   }
 }
+
+
  
 const mapDispatchToProps = dispatch => {
   return {
@@ -56,8 +74,7 @@ const mapDispatchToProps = dispatch => {
     setMessages: (messages) => dispatch({type: 'SET_MESSAGES', messages: messages})
   };
 };
+
+
  
-export default connect(
-  null,
-  mapDispatchToProps
-)(LogIn);
+export default connect(null,mapDispatchToProps)(LogIn);

@@ -6,33 +6,54 @@ import EditModal from '../containers/EditModal'
 import { Switch, Route, Redirect} from 'react-router-dom'
 import NoNotes from './NoNotes'
 import SendModal from './SendModal'
+import FilterForm from './FilterForm'
 
 
 class Notes extends Component{
 
+  state = {
+    filter: null
+  }
+
+  handleChange = e => {
+    this.setState({
+      filter: e.target.value
+    })
+  }
+
+
   handleClick = (note) => {
-    console.log(note)
     this.props.toggleNoteDisplay(note)
-    this.props.history.push(`/${this.props.type}/${note.id}`)
+    this.props.history.push(`/notes/${note.id}`)
+  }
+
+  filterNotes = () => {
+    if (this.state.filter){
+      return this.props.notes.filter(note => {
+        return note.tags.some(tag => tag.name.toLowerCase().includes(this.state.filter.toLowerCase()))
+      })
+    } else {
+      return this.props.notes
+    }
   }
 
   renderNotes = () => {
-    let notes = this.props.notes
-    return notes.length > 0 ?
+    let notes = this.filterNotes()
+    return this.props.notes.length > 0 ?
     <div id="notesList">
+      <FilterForm handleChange={this.handleChange}/>
       {notes.map(note => {
         return <Note note={note} key={note.id} handleClick={this.handleClick}/>
     })}
     </div>
     :
-    <NoNotes type={this.props.type} />
-
+    <NoNotes type={'notes'} />
   }
+
+
 
   renderDashboard = () => {
     let {match} = this.props
-    console.log(match.path)
-    console.log('YESSSS!', this.props.note)
     return (
       <div>
         {this.renderNotes()}
@@ -50,6 +71,8 @@ class Notes extends Component{
     )
   }
 
+
+
   render() {
     return (
     <div>
@@ -59,8 +82,10 @@ class Notes extends Component{
       <Redirect to="/login"/>}
     </div>
   )
+  }
 }
-}
+
+
 
 const mapStateToProps = state => {
   return {
@@ -70,10 +95,14 @@ const mapStateToProps = state => {
   };
 };
 
+
+
 const mapDispatchToProps = dispatch => {
   return {
     toggleNoteDisplay: note => dispatch({type: "TOGGLE_NOTE_DISPLAY", note: note})
   }
 }
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Notes);

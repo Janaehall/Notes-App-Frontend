@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Form, Button} from 'react-bootstrap'
 
 class LogIn extends Component {
+
   state = {
     username: '',
     noUser: false
@@ -13,22 +14,26 @@ class LogIn extends Component {
     fetch(`http://localhost:3000/users/${this.state.username}`)
     .then(resp => resp.json())
     .then(user => {
+      if(user.error){
+       this.setState({
+      noUser: true
+      })
+    } else {
       this.props.setUser(user)
       this.props.setNotes(user.notes)
       this.props.setMessages(user.received_messages)
-      console.log('WALLLLOOO!!!', user.received_messages)
       this.props.history.push(`/notes`)
-    })
-    .catch(error => this.setState({
-      noUser: true
-    }))
+    }
+   })
   }
+
 
   handleChange = e => {
     this.setState({
       username: e.target.value
     })
   }
+
 
   render() {
     return(
@@ -54,7 +59,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
  
-export default connect(
-  null,
-  mapDispatchToProps
-)(LogIn);
+export default connect(null, mapDispatchToProps)(LogIn);

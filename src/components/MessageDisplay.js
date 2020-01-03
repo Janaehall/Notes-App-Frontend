@@ -13,8 +13,24 @@ class messageDisplay extends Component {
     .then(alert("message has been deleted! 👍🏾"))
   }
 
+  componentDidMount() {
+    let message = this.props.message
+    this.props.seenMessage(message)
+    let reqObj = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        seen: true
+      })
+    }
+    fetch(`http://localhost:3000/messages/${message.id}`, reqObj)
+  }
+
+
+
   render() {
-    console.log("SUP")
     let {note} = this.props.message
     return(
     <div id="modal">
@@ -32,7 +48,7 @@ class messageDisplay extends Component {
         </Modal.Body>
           <Modal.Footer>
             <p className='mr-auto'>A lovely message from {this.props.message.sender.name}!</p>
-            <NavLink id="delLink" to='/messages' onClick={this.deleteMessage}>Delete</NavLink>
+            <NavLink id="delLink" to='/notes_from_friends' onClick={this.deleteMessage}>Delete</NavLink>
           </Modal.Footer>
       </Modal>
     </div>
@@ -41,20 +57,22 @@ class messageDisplay extends Component {
   }
 }
 
+
+
 const mapStateToProps = state => {
   return {
     message: state.message
   };
 };
+
+
  
 const mapDispatchToProps = dispatch => {
   return {
     deleteMessage: message => dispatch({type: 'DELETE_MESSAGE', message: message}),
-    toggleMessageDisplay: message => dispatch({type: 'TOGGLE_MESSAGE_DISPLAY', message: message})
+    toggleMessageDisplay: message => dispatch({type: 'TOGGLE_MESSAGE_DISPLAY', message: message}),
+    seenMessage: message => dispatch({type: 'SEEN_MESSAGE', message: message})
   };
 };
  
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(messageDisplay);
+export default connect(mapStateToProps,mapDispatchToProps)(messageDisplay);

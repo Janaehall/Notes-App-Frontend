@@ -4,6 +4,8 @@ import {Button, Form} from 'react-bootstrap'
 
 
 class EditNoteForm extends Component {
+
+
   constructor(props){
     super(props)
     this.state = {
@@ -11,18 +13,22 @@ class EditNoteForm extends Component {
     }
   }
 
+
   handleChange = (e) => {
     this.setState({
       note: {...this.state.note, [e.target.name]: e.target.value}
     })
   }
 
+
+
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.editNote(this.state.note)
     this.patchNote()
   }
-  
+
+
 
   patchNote = () => {
     let {id, title, content} = this.state.note 
@@ -40,6 +46,8 @@ class EditNoteForm extends Component {
     this.props.history.push(`/notes/${id}`)
     this.props.toggleNoteDisplay(this.state.note)
   }
+
+
 
 
   render() {
@@ -62,11 +70,15 @@ class EditNoteForm extends Component {
   }
 }
 
+
+
 const mapStateToProps = state => {
   return {
     note: state.note
   };
 };
+
+
  
 const mapDispatchToProps = dispatch => {
   return {

@@ -19,9 +19,9 @@ class App extends Component{
       <Switch>
         <Route exact path='/login' component={LogIn}/>
         <Route exact path='/sign_up' component={SignUp}/>
-        <Route path='/notes' render={(props) => <Notes {...props} type={'notes'}/>}/>
+        <Route path='/notes' render={(props) => <Notes {...props}/>}/>
         <Route exact path={`/new`} component={NewNoteForm}/>
-        <Route path={`/messages`} render={(props) => <Messages {...props} type={'messages'}/>}/>
+        <Route path={`/notes_from_friends`} render={(props) => <Messages {...props}/>}/>
 
       </Switch>
       </div>

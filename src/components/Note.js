@@ -1,12 +1,12 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Card} from 'react-bootstrap'
 
-export default class Note extends Component {
+const Note = (props) => {
 
-  render() {
-    let {note} = this.props
+    let {note} = props
+
     return(
-       <Card id="noteCard" onClick={() => this.props.handleClick(note)} bg="info" text="white" style={{ width: '18rem' }}>
+       <Card id="noteCard" onClick={() => props.handleClick(note)} bg="info" text="white" style={{ width: '18rem' }}>
       <Card.Header id="cardHeader">
         {note.title.toUpperCase().slice(0,20)}{note.title.length > 20? '...' : null}
       </Card.Header>
@@ -18,5 +18,6 @@ export default class Note extends Component {
      </Card>
 
     )
-  }
 }
+
+export default Note

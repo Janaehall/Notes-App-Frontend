@@ -4,6 +4,8 @@ import {NavLink} from 'react-router-dom'
 import {Navbar} from 'react-bootstrap'
 
 class Header extends Component{
+
+
   render() {
     return (
     <Navbar id="navBar">
@@ -12,7 +14,7 @@ class Header extends Component{
       <div id="navButtons" className="ml-auto">
           <NavLink to="/new" id="headerLink" activeStyle={{'text-decoration': 'underline'}}>New Note</NavLink>/
           <NavLink to="/notes" id="headerLink" activeStyle={{'text-decoration': 'underline'}}>My Notes</NavLink>/
-          <NavLink to="/messages" id="headerLink" activeStyle={{'text-decoration': 'underline'}}>Notes From Friends</NavLink>/
+          <NavLink to="/notes_from_friends" id="headerLink" activeStyle={{'text-decoration': 'underline'}}>Notes From Friends</NavLink>/
           <NavLink to="/login" id="headerLink" onClick={this.props.signOut} activeStyle={{'text-decoration': 'underline'}}>Sign Out</NavLink>
       </div>: null}
     </Navbar>
@@ -20,11 +22,13 @@ class Header extends Component{
 }
 }
 
+
 const mapStateToProps = state => {
   return {
     currentUser: state.currentUser
   };
 };
+
  
 const mapDispatchToProps = dispatch => {
   return {
@@ -32,7 +36,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
  
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
