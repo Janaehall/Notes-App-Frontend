@@ -59,6 +59,7 @@ class Messages extends Component{
 
 
   render() {
+    console.log(this.props.messages.length)
     return (
     <div>
       {this.props.messages.length > 0 ?
