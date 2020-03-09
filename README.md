@@ -15,14 +15,8 @@ In order to run this application, you must have the following:
 
 Runs the app in the development mode.<br />
 Before you begin the following steps, please clone this repository along with [Notes-App-Backend](https://github.com/Janaehall/Notes-App-Backend)
-  1. Navigate to Notes-App-Backend and run the following commands to create the required databases and run the necessary migrations:
-  ```
-    rails db:create
-    rails db:migrate
-  ```
-  2. Once all of the migrations are complete, enter ```rails s``` to run a rails server on port 3000
-
-  3. Return to the main directory, then navigate to Notes-App-Frontend and run ```npm start```
+  1. Clone Notes-App-Backend and follow instructions included in the ReadMe.
+  3. Navigate to Notes-App-Frontend and run ```npm start```
   4. Open your browser and navigate to http://localhost:3001/login to begin using the application.
   
   ### Built With
