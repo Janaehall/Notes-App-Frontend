@@ -24,4 +24,12 @@ Before you begin the following steps, please clone this repository along with [N
 
   3. Return to the main directory, then navigate to Notes-App-Frontend and run ```npm start```
   4. Open your browser and navigate to http://localhost:3001/login to begin using the application.
+  
+  ### Built With
 
+This application was built using:
+<ul>
+  <li>React Bootstrap</li>
+  <li>Rails v6.0</li>
+  <li>React v16.12</li>
+</ul>
